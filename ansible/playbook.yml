@@ -68,20 +68,20 @@
         mode: '0644'
 
     - name: Verify Docker installation
-      ansible.builtin.command:
+      ansible.builtin.shell:
         cmd: sudo docker --version
         become: yes
         become_user: ec2-user
 
     - name: Verify Docker Compose installation
-      ansible.builtin.command:
+      ansible.builtin.shell:
         cmd: sudo docker-compose --version
         become: yes
         become_user: ec2-user
 
     - name: Run Docker Compose
-      become: yes
-      become_user: ec2-user
-      ansible.builtin.command:
+      ansible.builtin.shell:
         cmd: sudo docker-compose up -d
         chdir: /home/ec2-user
+        become: yes
+        become_user: ec2-user
