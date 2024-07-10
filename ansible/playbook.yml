@@ -59,6 +59,12 @@
         groups: docker
         append: yes
 
+    - name: Ensure Docker group membership is applied
+      ansible.builtin.command:
+        cmd: newgrp docker
+        become: yes
+        become_user: ec2-user
+
     - name: Copy Docker Compose file
       ansible.builtin.copy:
         src: docker-compose.yml
@@ -66,6 +72,18 @@
         owner: ec2-user
         group: ec2-user
         mode: '0644'
+
+    - name: Verify Docker installation
+      ansible.builtin.command:
+        cmd: docker --version
+        become: yes
+        become_user: ec2-user
+
+    - name: Verify Docker Compose installation
+      ansible.builtin.command:
+        cmd: docker-compose --version
+        become: yes
+        become_user: ec2-user
 
     - name: Run Docker Compose
       become: yes
