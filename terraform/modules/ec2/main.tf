@@ -9,4 +9,12 @@ resource "aws_instance" "web" {
   tags = {
     Name = "Terraform EC2"
   }
+
+  provisioner "local-exec" {
+    command = <<EOT
+      echo "[web]" > ../../ansible/inventory
+      echo "${self.public_ip}" >> ../../ansible/inventory
+      ansible-playbook -i ../../ansible/inventory ../../ansible/playbook.yml --private-key ~/.ssh/id_rsa -u ec2-user
+    EOT
+  }
 }
