@@ -26,7 +26,7 @@ resource "aws_instance" "web" {
       echo "Sleeping for 60 seconds to allow EC2 instance to initialize..."
       sleep 60
       echo "Running Ansible playbook..."
-      ansible-playbook -i inventory playbook.yml --private-key ~/.ssh/id_rsa -u ec2-user
+      ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory playbook.yml --private-key ~/.ssh/id_rsa -u ec2-user
     EOT
   }
 }
