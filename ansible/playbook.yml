@@ -70,18 +70,12 @@
     - name: Verify Docker installation
       ansible.builtin.shell:
         cmd: sudo docker --version
-        args:
-          executable: /bin/bash
 
     - name: Verify Docker Compose installation
       ansible.builtin.shell:
         cmd: sudo docker-compose --version
-        args:
-          executable: /bin/bash
 
     - name: Run Docker Compose
       ansible.builtin.shell:
         cmd: sudo docker-compose up -d
         chdir: /home/ec2-user
-        args:
-          executable: /bin/bash
