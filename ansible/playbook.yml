@@ -4,9 +4,7 @@
   become: yes
   tasks:
     - name: Update and upgrade yum packages
-      yum:
-        name: '*'
-        state: latest
+      command: yum update -y
 
     - name: Install Docker
       yum:
