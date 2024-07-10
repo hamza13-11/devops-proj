@@ -57,8 +57,8 @@
         mode: '0644'
 
     - name: Run Docker Compose
+      become: yes
+      become_user: ec2-user
       ansible.builtin.command:
         cmd: docker-compose up -d
         chdir: /home/ec2-user
-        become: yes
-        become_user: ec2-user
