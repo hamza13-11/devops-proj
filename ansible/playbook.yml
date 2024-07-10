@@ -47,3 +47,18 @@
         name: docker
         state: started
         enabled: yes
+
+    - name: Copy Docker Compose file
+      ansible.builtin.copy:
+        src: docker-compose.yml
+        dest: /home/ec2-user/docker-compose.yml
+        owner: ec2-user
+        group: ec2-user
+        mode: '0644'
+
+    - name: Run Docker Compose
+      ansible.builtin.command:
+        cmd: docker-compose up -d
+        chdir: /home/ec2-user
+        become: yes
+        become_user: ec2-user
