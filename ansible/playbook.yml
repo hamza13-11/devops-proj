@@ -16,10 +16,9 @@
         system: no
 
     - name: Install Apache
-      ansible.builtin.package:
+      ansible.builtin.yum:
         name: httpd
         state: installed
-        use_yum: true
 
     - name: Enable and start httpd service
       ansible.builtin.service:
@@ -28,24 +27,21 @@
         state: started
 
     - name: Install PHP
-      ansible.builtin.package:
+      ansible.builtin.yum:
         name: 
           - php
           - php-mysql
         state: latest
-        use_yum: true
 
     - name: Install Docker
-      ansible.builtin.package:
+      ansible.builtin.yum:
         name: docker
         state: present
-        use_yum: true
 
     - name: Install pip
-      ansible.builtin.package:
+      ansible.builtin.yum:
         name: python3-pip
         state: present
-        use_yum: true
 
     - name: Install Docker Compose
       ansible.builtin.pip:
