@@ -42,6 +42,11 @@
         name: docker-compose
         state: present
 
+    - name: Downgrade urllib3 to a compatible version
+      ansible.builtin.pip:
+        name: urllib3==1.26.15
+        state: present
+
     - name: Start and enable Docker service
       ansible.builtin.systemd:
         name: docker
