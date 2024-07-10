@@ -23,6 +23,8 @@ resource "aws_instance" "web" {
       echo "${self.public_ip}" >> inventory
       echo "Inventory file created. Listing files in ansible directory:"
       ls -la
+      echo "Sleeping for 60 seconds to allow EC2 instance to initialize..."
+      sleep 60
       echo "Running Ansible playbook..."
       ansible-playbook -i inventory playbook.yml --private-key ~/.ssh/id_rsa -u ec2-user
     EOT
