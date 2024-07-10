@@ -12,17 +12,19 @@ resource "aws_instance" "web" {
 
   provisioner "local-exec" {
     command = <<EOT
-      echo "Current working directory: $(pwd)"
+      echo "Current working directory: \$(pwd)"
       echo "Listing files in current directory:"
       ls -la
+      echo "Changing to ansible directory..."
+      cd ../ansible
       echo "Creating ansible directory and inventory file..."
-      mkdir -p ./ansible
-      echo "[web]" > ./ansible/inventory
-      echo "${self.public_ip}" >> ./ansible/inventory
+      mkdir -p .
+      echo "[web]" > inventory
+      echo "${self.public_ip}" >> inventory
       echo "Inventory file created. Listing files in ansible directory:"
-      ls -la ./ansible
+      ls -la
       echo "Running Ansible playbook..."
-      ansible-playbook -i ./ansible/inventory ./ansible/playbook.yml --private-key ~/.ssh/id_rsa -u ec2-user
+      ansible-playbook -i inventory playbook.yml --private-key ~/.ssh/id_rsa -u ec2-user
     EOT
   }
 }
