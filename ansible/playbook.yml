@@ -73,9 +73,9 @@
 
     - name: Verify Docker Compose installation
       ansible.builtin.shell:
-        cmd: sudo docker-compose --version
+        cmd: sudo /usr/local/bin/docker-compose --version
 
     - name: Run Docker Compose
       ansible.builtin.shell:
-        cmd: sudo docker-compose up -d
+        cmd: sudo /usr/local/bin/docker-compose up -d
         chdir: /home/ec2-user
