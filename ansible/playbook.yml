@@ -53,6 +53,12 @@
         state: started
         enabled: yes
 
+    - name: Add ec2-user to the docker group
+      ansible.builtin.user:
+        name: ec2-user
+        groups: docker
+        append: yes
+
     - name: Copy Docker Compose file
       ansible.builtin.copy:
         src: docker-compose.yml
