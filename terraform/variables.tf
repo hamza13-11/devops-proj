@@ -25,7 +25,7 @@ variable "private_subnet_cidrs" {
 variable "instance_type" {
   description = "EC2 instance type"
   type        = string
-  default     = "t2.small"
+  default     = "t2.medium"
 }
 
 variable "my_ip" {
