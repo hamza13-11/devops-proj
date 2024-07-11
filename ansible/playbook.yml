@@ -67,6 +67,15 @@
         group: ec2-user
         mode: '0644'
 
+    - name: Set vm.max_map_count to 262144
+      ansible.builtin.command: sysctl -w vm.max_map_count=262144
+
+    - name: Ensure vm.max_map_count is set in sysctl.conf
+      ansible.builtin.lineinfile:
+        path: /etc/sysctl.conf
+        regexp: '^vm.max_map_count'
+        line: 'vm.max_map_count=262144'
+
     - name: Verify Docker installation
       ansible.builtin.shell:
         cmd: sudo docker --version
