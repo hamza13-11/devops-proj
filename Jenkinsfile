@@ -1,43 +1,37 @@
 pipeline {
     agent any
 
+    tools {
+        // Specify the SonarScanner tool
+        sonarQube 'SonarScanner'
+    }
+
     environment {
-        SCANNER_HOME = tool name: 'SonarScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-        DOCKER_IMAGE = 'devops-proj:latest' 
+        // Define environment variables
+        scannerHome = tool 'SonarScanner'
     }
 
     stages {
-        stage('Checkout Code') {
+        stage('SCM') {
             steps {
+                // Checkout the code from the repository
                 checkout scm
             }
         }
-
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('SonarQubeServer') { // Ensure this matches the name of your SonarQube server
-                    sh '''
-                        echo "Running SonarQube analysis..."
-                        ${SCANNER_HOME}/bin/sonar-scanner -Dsonar.verbose=true
-                    '''
+                // Run SonarQube analysis
+                withSonarQubeEnv('SonarQube') {
+                    sh "${scannerHome}/bin/sonar-scanner"
                 }
             }
         }
-
         stage('Build Docker Image') {
             steps {
+                // Build the Docker image
                 script {
-                    // Build the Docker image
-                    sh 'docker build -t ${DOCKER_IMAGE} .'
-                }
-            }
-        }
-
-        stage('Push Docker Image') {
-            steps {
-                script {
-                    // Push the Docker image to your registry
-                    sh 'docker push ${DOCKER_IMAGE}'
+                    def imageName = "react-app:latest"
+                    sh "docker build -t ${imageName} ."
                 }
             }
         }
@@ -45,14 +39,8 @@ pipeline {
 
     post {
         always {
-            // Clean up workspace after build
-            cleanWs()
-        }
-        success {
-            echo 'Build completed successfully!'
-        }
-        failure {
-            echo 'Build failed!'
+            // Cleanup actions or notifications can be added here
+            echo 'Pipeline execution finished.'
         }
     }
 }
