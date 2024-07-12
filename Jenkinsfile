@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         SCANNER_HOME = tool name: 'SonarScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-        DOCKER_IMAGE = 'your-docker-image-name' // Replace with your Docker image name
+        DOCKER_IMAGE = 'devops-proj:latest' 
     }
 
     stages {
@@ -37,7 +37,6 @@ pipeline {
             steps {
                 script {
                     // Push the Docker image to your registry
-                    // Ensure you have logged in to your Docker registry using 'docker login'
                     sh 'docker push ${DOCKER_IMAGE}'
                 }
             }
