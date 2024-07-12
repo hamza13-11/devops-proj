@@ -11,7 +11,7 @@ node {
   stage('Build Docker Image') {
     def dockerImage
     def dockerRegistry = 'docker.io'
-    def dockerImageName = 'your-dockerhub-username/your-image-name'
+    def dockerImageName = 'hamza1311/react-app'
     def dockerImageTag = 'latest'
 
     script {
